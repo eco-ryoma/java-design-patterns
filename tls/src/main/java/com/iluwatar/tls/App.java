@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2016 Thomas Bauer
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,48 +28,47 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ThreadLocal pattern
- * <p>
- * This App shows how to create an isolated space per each thread. In this
- * example the usage of SimpleDateFormat is made to be thread-safe. This is an
- * example of the ThreadLocal pattern.
- * <p>
- * By applying the ThreadLocal pattern you can keep track of application
- * instances or locale settings throughout the handling of a request. The
- * ThreadLocal class works like a static variable, with the exception that it is
- * only bound to the current thread! This allows us to use static variables in a
- * thread-safe way.
- * <p>
- * In Java, thread-local variables are implemented by the ThreadLocal class
- * object. ThreadLocal holds a variable of type T, which is accessible via get/set
- * methods.
- * <p>
- * SimpleDateFormat is one of the basic Java classes and is not thread-safe. If
- * you do not isolate the instance of SimpleDateFormat per each thread then
- * problems arise. 
- * <p>
- * App converts the String date value 15/12/2015 to the Date format using the
- * Java class SimpleDateFormat. It does this 20 times using 4 threads, each doing 
- * it 5 times. With the usage of as ThreadLocal in DateFormatCallable everything 
- * runs well. But if you comment out the ThreadLocal variant (marked with "//TLTL") 
- * and comment in the non ThreadLocal variant (marked with "//NTLNTL") you can 
- * see what will happen without the ThreadLocal. Most likely you will get incorrect 
- * date values and / or exceptions.
- * <p>
- * This example clearly show what will happen when using non thread-safe classes
- * in a thread. In real life this may happen one in of 1.000 or 10.000 conversions
- * and those are really hard to find errors.
- * 
- * @author Thomas Bauer, 2017 
+ *
+ * <p>This App shows how to create an isolated space per each thread. In this example the usage of
+ * SimpleDateFormat is made to be thread-safe. This is an example of the ThreadLocal pattern.
+ *
+ * <p>By applying the ThreadLocal pattern you can keep track of application instances or locale
+ * settings throughout the handling of a request. The ThreadLocal class works like a static
+ * variable, with the exception that it is only bound to the current thread! This allows us to use
+ * static variables in a thread-safe way.
+ *
+ * <p>In Java, thread-local variables are implemented by the ThreadLocal class object. ThreadLocal
+ * holds a variable of type T, which is accessible via get/set methods.
+ *
+ * <p>SimpleDateFormat is one of the basic Java classes and is not thread-safe. If you do not
+ * isolate the instance of SimpleDateFormat per each thread then problems arise.
+ *
+ * <p>App converts the String date value 15/12/2015 to the Date format using the Java class
+ * SimpleDateFormat. It does this 20 times using 4 threads, each doing it 5 times. With the usage of
+ * as ThreadLocal in DateFormatCallable everything runs well. But if you comment out the ThreadLocal
+ * variant (marked with "//TLTL") and comment in the non ThreadLocal variant (marked with
+ * "//NTLNTL") you can see what will happen without the ThreadLocal. Most likely you will get
+ * incorrect date values and / or exceptions.
+ *
+ * <p>This example clearly show what will happen when using non thread-safe classes in a thread. In
+ * real life this may happen one in of 1.000 or 10.000 conversions and those are really hard to find
+ * errors.
+ *
+ * @author Thomas Bauer, 2017
  */
 public class App {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+
   /**
-   * Program entry point
-   * 
-   * @param args
-   *          command line args
+   * Program entry point.
+   *
+   * @param args command line args
    */
   public static void main(String[] args) {
     int counterDateValues = 0;
@@ -100,19 +99,19 @@ public class App {
 
       // a correct run should deliver 20 times 15.12.2015
       // and a correct run shouldn't deliver any exception
-      System.out.println("The List dateList contains " + counterDateValues + " date values");
-      System.out.println("The List exceptionList contains " + counterExceptions + " exceptions");
+      LOGGER.info("The List dateList contains " + counterDateValues + " date values");
+      LOGGER.info("The List exceptionList contains " + counterExceptions + " exceptions");
 
     } catch (Exception e) {
-      System.out.println("Abnormal end of program. Program throws exception: " + e); 
+      LOGGER.info("Abnormal end of program. Program throws exception: " + e);
     }
     executor.shutdown();
   }
 
   /**
-   * Print result (date values) of a thread execution and count dates
-   * 
-   * @param res  contains results of a thread execution
+   * Print result (date values) of a thread execution and count dates.
+   *
+   * @param res contains results of a thread execution
    */
   private static int printAndCountDates(Result res) {
     // a correct run should deliver 5 times 15.12.2015 per each thread
@@ -122,16 +121,17 @@ public class App {
       Calendar cal = Calendar.getInstance();
       cal.setTime(dt);
       // Formatted output of the date value: DD.MM.YYYY
-      System.out.println(
-          cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + +cal.get(Calendar.YEAR));
+      LOGGER.info(
+          cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + +cal
+              .get(Calendar.YEAR));
     }
     return counter;
   }
 
   /**
-   * Print result (exceptions) of a thread execution and count exceptions
-   * 
-   * @param res  contains results of a thread execution
+   * Print result (exceptions) of a thread execution and count exceptions.
+   *
+   * @param res contains results of a thread execution
    * @return number of dates
    */
   private static int printAndCountExceptions(Result res) {
@@ -139,7 +139,7 @@ public class App {
     int counter = 0;
     for (String ex : res.getExceptionList()) {
       counter++;
-      System.out.println(ex);
+      LOGGER.info(ex);
     }
     return counter;
   }

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Sepp�l�
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import com.iluwatar.commander.exceptions.IsEmptyException;
 
 /**
  * Queue data structure implementation.
+ *
  * @param <T> is the type of object the queue will hold.
  */
 
@@ -47,15 +48,14 @@ public class Queue<T> {
   }
 
   /**
-   * Queue constructor
+   * Queue constructor.
    */
-  
   Queue() {
     front = null;
     rear = null;
     size = 0;
   }
-  
+
   boolean isEmpty() {
     if (size == 0) {
       return true;
@@ -63,7 +63,7 @@ public class Queue<T> {
       return false;
     }
   }
-  
+
   void enqueue(T obj) {
     if (front == null) {
       front = new Node(obj, null);
@@ -75,7 +75,7 @@ public class Queue<T> {
     }
     size++;
   }
-  
+
   T dequeue() throws IsEmptyException {
     if (isEmpty()) {
       throw new IsEmptyException();
@@ -83,15 +83,15 @@ public class Queue<T> {
       Node temp = front;
       front = front.next;
       size = size - 1;
-      return ((T) temp.value);
+      return (T) temp.value;
     }
   }
-  
+
   T peek() throws IsEmptyException {
     if (isEmpty()) {
       throw new IsEmptyException();
     } else {
-      return ((T)front.value);
+      return (T) front.value;
     }
   }
 }

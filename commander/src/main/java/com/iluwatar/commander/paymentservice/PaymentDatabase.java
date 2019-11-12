@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Sepp�l�
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,10 @@
 
 package com.iluwatar.commander.paymentservice;
 
-import java.util.Hashtable;
-
 import com.iluwatar.commander.Database;
 import com.iluwatar.commander.exceptions.DatabaseUnavailableException;
 import com.iluwatar.commander.paymentservice.PaymentService.PaymentRequest;
+import java.util.Hashtable;
 
 /**
  * PaymentDatabase is where the PaymentRequest is added, along with details.
@@ -48,8 +47,8 @@ public class PaymentDatabase extends Database<PaymentRequest> {
   }
 
   @Override
-  public PaymentRequest get(String tId) throws DatabaseUnavailableException {
-    return data.get(tId);
+  public PaymentRequest get(String requestId) throws DatabaseUnavailableException {
+    return data.get(requestId);
   }
 
 }

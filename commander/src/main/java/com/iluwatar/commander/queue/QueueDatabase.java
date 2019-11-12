@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Sepp�l�
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,11 @@
 
 package com.iluwatar.commander.queue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import com.iluwatar.commander.Database;
 import com.iluwatar.commander.exceptions.DatabaseUnavailableException;
 import com.iluwatar.commander.exceptions.IsEmptyException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * QueueDatabase id where the instructions to be implemented are queued.
@@ -38,9 +38,9 @@ public class QueueDatabase extends Database<QueueTask> {
   private Queue<QueueTask> data;
   public ArrayList<Exception> exceptionsList;
 
-  public QueueDatabase(Exception...exc) {
-    this.data = new Queue<QueueTask>();
-    this.exceptionsList = new ArrayList<Exception>(Arrays.asList(exc));
+  public QueueDatabase(Exception... exc) {
+    this.data = new Queue<>();
+    this.exceptionsList = new ArrayList<>(List.of(exc));
   }
 
   @Override
@@ -51,31 +51,33 @@ public class QueueDatabase extends Database<QueueTask> {
   }
 
   /**
-   * peek method returns object at front without removing it from queue
+   * peek method returns object at front without removing it from queue.
+   *
    * @return object at front of queue
-   * @throws IsEmptyException if queue is empty
+   * @throws IsEmptyException             if queue is empty
    * @throws DatabaseUnavailableException if queue db is unavailable
    */
-  
+
   public QueueTask peek() throws IsEmptyException, DatabaseUnavailableException {
     QueueTask qt = this.data.peek();
     return qt;
   }
 
   /**
-   * dequeue method removes the object at front and returns it
+   * dequeue method removes the object at front and returns it.
+   *
    * @return object at front of queue
-   * @throws IsEmptyException if queue is empty
+   * @throws IsEmptyException             if queue is empty
    * @throws DatabaseUnavailableException if queue db is unavailable
    */
-  
+
   public QueueTask dequeue() throws IsEmptyException, DatabaseUnavailableException {
     QueueTask qt = this.data.dequeue();
     return qt;
   }
 
   @Override
-  public QueueTask get(String tId) throws DatabaseUnavailableException {
+  public QueueTask get(String taskId) throws DatabaseUnavailableException {
     return null;
   }
 
