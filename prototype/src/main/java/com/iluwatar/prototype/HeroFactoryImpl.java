@@ -24,9 +24,7 @@
 package com.iluwatar.prototype;
 
 /**
- * 
  * Concrete factory class.
- * 
  */
 public class HeroFactoryImpl implements HeroFactory {
 
@@ -35,7 +33,7 @@ public class HeroFactoryImpl implements HeroFactory {
   private Beast beast;
 
   /**
-   * Constructor
+   * Constructor.
    */
   public HeroFactoryImpl(Mage mage, Warlord warlord, Beast beast) {
     this.mage = mage;
@@ -44,36 +42,24 @@ public class HeroFactoryImpl implements HeroFactory {
   }
 
   /**
-   * Create mage
+   * Create mage.
    */
   public Mage createMage() {
-    try {
-      return mage.copy();
-    } catch (CloneNotSupportedException e) {
-      return null;
-    }
+    return mage.copy();
   }
 
   /**
-   * Create warlord
+   * Create warlord.
    */
   public Warlord createWarlord() {
-    try {
-      return warlord.copy();
-    } catch (CloneNotSupportedException e) {
-      return null;
-    }
+    return warlord.copy();
   }
 
   /**
-   * Create beast
+   * Create beast.
    */
   public Beast createBeast() {
-    try {
-      return beast.copy();
-    } catch (CloneNotSupportedException e) {
-      return null;
-    }
+    return beast.copy();
   }
 
 }

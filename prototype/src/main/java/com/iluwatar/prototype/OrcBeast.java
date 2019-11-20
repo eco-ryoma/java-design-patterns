@@ -24,24 +24,23 @@
 package com.iluwatar.prototype;
 
 /**
- * 
- * OrcBeast
- *
+ * OrcBeast.
  */
 public class OrcBeast extends Beast {
-  
+
   private String weapon;
 
   public OrcBeast(String weapon) {
     this.weapon = weapon;
   }
-  
+
   public OrcBeast(OrcBeast orcBeast) {
+    super(orcBeast);
     this.weapon = orcBeast.weapon;
   }
 
   @Override
-  public Beast copy() {
+  public OrcBeast copy() {
     return new OrcBeast(this);
   }
 
@@ -49,6 +48,28 @@ public class OrcBeast extends Beast {
   public String toString() {
     return "Orcish wolf attacks with " + weapon;
   }
-  
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    OrcBeast other = (OrcBeast) obj;
+    if (weapon == null) {
+      if (other.weapon != null) {
+        return false;
+      }
+    } else if (!weapon.equals(other.weapon)) {
+      return false;
+    }
+    return true;
+  }
+
 
 }
